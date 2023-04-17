@@ -3,7 +3,6 @@
 namespace Workshop\SRP\Refactored;
 
 use Exception;
-use Workshop\SRP\Original\Logger;
 
 class LoggerFile extends Logger
 {

@@ -4,7 +4,6 @@ namespace Workshop\SRP\Refactored;
 
 use PDO;
 use Exception;
-use Workshop\SRP\Original\Logger;
 
 class LoggerDatabase extends Logger
 {
