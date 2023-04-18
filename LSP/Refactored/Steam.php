@@ -10,21 +10,26 @@ class Steam extends GameStore
     {
         $conn = $this->getConnection();
 
-        if (is_array($conn)) {
-            return $conn;
-        }
-
         $query = $conn->prepare(
             'SELECT
                 `name` AS title,
                 `content` AS content,
                 `created_at` AS published_at
             FROM `games`
-            ORDER BY `created_at` DESC
+            ORDER BY `created_at` ASC
             LIMIT :limit'
         );
         $query->bindValue(':limit', $limit, PDO::PARAM_INT);
 
-        return $query->fetchAll();
+        $query->execute();
+
+        $games = $query->fetchAll();
+
+        $formattedGames = array_map(function ($game) {
+            $game['published_at'] = substr($game['published_at'], 0, 4);
+            return $game;
+        }, $games);
+
+        return $formattedGames;
     }
 }

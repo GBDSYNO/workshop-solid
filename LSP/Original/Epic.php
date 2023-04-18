@@ -3,13 +3,18 @@
 namespace Workshop\LSP\Original;
 
 use PDO;
+use Workshop\Config;
 
 class Epic extends GameStore
 {
     public function findGames(int $limit)
     {
         try {
-            $conn = new PDO('abcd');
+            $conn = new PDO(
+                sprintf('mysql:host=%s;dbname=%s', Config::$EPIC_DB_HOST, Config::$EPIC_DB_NAME),
+                Config::$EPIC_DB_USERNAME,
+                Config::$EPIC_DB_PASSWORD,
+            );
 
             $query = $conn->prepare(
                 "SELECT
@@ -22,7 +27,9 @@ class Epic extends GameStore
                 LIMIT $limit"
             );
 
-            return $query->fetchAll();
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
             return $e->getMessage();
         }

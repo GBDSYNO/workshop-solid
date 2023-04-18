@@ -11,14 +11,9 @@ class Demo implements Runable
         $steam = new Steam();
         $epic = new Epic();
 
-        self::displayGames($steam->findGames(10));
-        self::displayGames($epic->findGames(10));
-    }
+        $gamesDisplayer = new GamesDisplayerService();
 
-    private static function displayGames(array $games)
-    {
-        foreach ($games as $game) {
-            echo "$game\n";
-        }
+        $gamesDisplayer->displayGamesList($epic->findGames(10));
+        $gamesDisplayer->displayGamesList($steam->findGames(10));
     }
 }

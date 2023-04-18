@@ -17,9 +17,12 @@ class Epic extends GameStore
                 `publish_up` AS published_at
             FROM `games`
             WHERE `state` = 1
-            ORDER BY `publish_up` DESC
+            ORDER BY `publish_up` ASC
             LIMIT $limit"
         );
+
+        $query->execute();
+
         return $query->fetchAll();
     }
 }

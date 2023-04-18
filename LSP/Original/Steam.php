@@ -3,16 +3,17 @@
 namespace Workshop\LSP\Original;
 
 use PDO;
+use Workshop\Config;
 
 class Steam extends GameStore
 {
     public function findGames(int $limit)
     {
-        $conn = $this->getConnection('abcd');
-
-        if (is_array($conn)) {
-            return $conn;
-        }
+        $conn = $this->getConnection(
+            sprintf('mysql:host=%s;dbname=%s', Config::$STEAM_DB_HOST, Config::$STEAM_DB_NAME),
+            Config::$STEAM_DB_USERNAME,
+            Config::$STEAM_DB_PASSWORD,
+        );
 
         $query = $conn->prepare(
             "SELECT
@@ -24,19 +25,17 @@ class Steam extends GameStore
             LIMIT 10"
         );
 
+        $query->execute();
+
         return $query->fetchAll();
     }
 
-    private function getConnection($dsn): PDO|array
+    private function getConnection($dsn, $username, $password): PDO
     {
-        try {
-            if (!str_contains($dsn, 'steamhost')) {
-                throw new SteamException();
-            } else {
-                return new PDO($dsn);
-            }
-        } catch (SteamException $e) {
-            return $e->getErrors();
+        if (!str_contains($dsn, 'steam')) {
+            throw new SteamHostException();
+        } else {
+            return new PDO($dsn, $username, $password);
         }
     }
 }
