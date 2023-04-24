@@ -25,11 +25,14 @@ class Steam extends GameStore
 
         $games = $query->fetchAll();
 
-        $formattedGames = array_map(function ($game) {
+        return $this->formatGames($games);
+    }
+
+    private function formatGames(array $games): array
+    {
+        return array_map(function ($game) {
             $game['published_at'] = substr($game['published_at'], 0, 4);
             return $game;
         }, $games);
-
-        return $formattedGames;
     }
 }
