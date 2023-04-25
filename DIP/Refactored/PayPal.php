@@ -2,7 +2,7 @@
 
 namespace Workshop\DIP\Refactored;
 
-class PayPal implements Payable
+class PayPal extends PaymentPlatform
 {
     public function pay(int $amount): void
     {

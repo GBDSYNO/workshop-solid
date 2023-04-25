@@ -2,7 +2,7 @@
 
 namespace Workshop\DIP\Refactored;
 
-class GooglePay implements Payable
+class GooglePay extends PaymentPlatform
 {
     public function pay(int $amount): void
     {

@@ -2,7 +2,7 @@
 
 namespace Workshop\DIP\Refactored;
 
-class Stripe implements Payable
+class Stripe extends PaymentPlatform
 {
     public function pay(int $amount): void
     {

@@ -4,7 +4,7 @@ namespace Workshop\DIP\Refactored;
 
 class PaymentProvider
 {
-    public function goToPaymentPage(Payable $optionChosen, int $amount): void
+    public function goToPaymentPage(PaymentPlatform $optionChosen, int $amount): void
     {
         $optionChosen->pay($amount);
     }
