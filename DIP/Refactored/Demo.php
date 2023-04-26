@@ -13,5 +13,8 @@ class Demo implements Runable
         $paymentProvider->goToPaymentPage(new PayPal(), 50);
         $paymentProvider->goToPaymentPage(new Stripe(), 50);
         $paymentProvider->goToPaymentPage(new GooglePay(), 50);
+
+        $userService = new UserService(new UserRepository);
+        $userService->saveUser(new User('Hubert Bonisseur de la Bath Refactored'));
     }
 }
